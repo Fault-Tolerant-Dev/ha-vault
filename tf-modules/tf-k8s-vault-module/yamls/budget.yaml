@@ -1,0 +1,13 @@
+---
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: vault-budget
+  namespace: vault-namespace
+  labels:
+    app.kubernetes.io/name: vault
+spec:
+  maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: vault

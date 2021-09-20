@@ -1,0 +1,46 @@
+# This PodSecurityPolicy is specifically built for StubHub's Vault PODs
+---
+apiVersion: extensions/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  name: vault-psp
+  annotations:
+    seccomp.security.alpha.kubernetes.io/allowedProfileNames: 'runtime/default'
+    apparmor.security.beta.kubernetes.io/allowedProfileNames: 'runtime/default'
+    seccomp.security.alpha.kubernetes.io/defaultProfileName:  'runtime/default'
+    apparmor.security.beta.kubernetes.io/defaultProfileName:  'runtime/default'
+spec:
+  # Prevent containers from running as privileged
+  privileged: false
+  # Prevents a process in a containers from gaining elevated privileges
+  allowPrivilegeEscalation: false
+  allowedCapabilities: []
+  # Allow only the following volumes to be mounted
+  # configMap for mounting the vault server config
+  # secret for mounting the TLS certificates
+  volumes:
+  - 'configMap'
+  - 'secret'
+  hostNetwork: false
+  hostIPC: false
+  hostPID: false
+  # Our Vault container is configured to run as user vault
+  runAsUser:
+    rule: 'MustRunAsNonRoot'
+  seLinux:
+    rule: 'RunAsAny'
+  supplementalGroups:
+    rule: 'MustRunAs'
+    # Forcing the Vault container to use UID
+    ranges:
+      # Forbid adding the root group
+      - min: 1001
+        max: 1001
+  fsGroup:
+    rule: 'MustRunAs'
+    ranges:
+      # Forbid adding the root group
+      - min: 1001
+        max: 1001
+  # Prevent writing to the container filesystem
+  readOnlyRootFilesystem: true

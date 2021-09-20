@@ -1,0 +1,43 @@
+# OSX stuff
+.DS_Store
+._*
+
+# Vim stuff
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*.un~
+Session.vim
+.netrwhist
+
+#ide stuff
+*.sw?
+.#*
+*#
+*~
+*.iml
+.*.md.html
+.classpath
+.idea
+.gradle
+.project
+.settings
+.springBeans
+build.log
+settings.xml
+
+#terraform stuff
+### https://raw.github.com/github/gitignore/90f149de451a5433aebd94d02d11b0e28843a1af/Terraform.gitignore
+**/.terraform/*
+#*.tfvars
+*.tfplan
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+crash.log
+out.log
+
+#gcp stuff
+*.key.json
+*.backup
+*.key
+*.crt

@@ -1,0 +1,20 @@
+kind: dns#resourceRecordSet
+name: vault.evilmachine.net.
+rrdatas:
+- vault-secondary.evilmachine.net.
+ttl: 60
+type: CNAME
+---
+kind: dns#resourceRecordSet
+name: vault-primary.evilmachine.net.
+rrdatas:
+- 34.94.27.51
+ttl: 300
+type: A
+---
+kind: dns#resourceRecordSet
+name: vault-secondary.evilmachine.net.
+rrdatas:
+- 35.186.169.82
+ttl: 300
+type: A

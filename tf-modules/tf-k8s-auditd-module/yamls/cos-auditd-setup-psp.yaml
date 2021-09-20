@@ -1,0 +1,35 @@
+# This PodSecurityPolicy is specifically built for Google's COS AuditD PODs
+---
+apiVersion: extensions/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  name: cos-auditd-setup-psp
+  annotations:
+    seccomp.security.alpha.kubernetes.io/allowedProfileNames: 'runtime/default'
+    apparmor.security.beta.kubernetes.io/allowedProfileNames: 'runtime/default'
+    seccomp.security.alpha.kubernetes.io/defaultProfileName:  'runtime/default'
+    apparmor.security.beta.kubernetes.io/defaultProfileName:  'runtime/default'
+spec:
+  privileged: true
+  allowPrivilegeEscalation: true
+  allowedCapabilities: []
+  volumes:
+  - 'configMap'
+  - 'hostPath'
+  allowedHostPaths:
+    - pathPrefix: "/"
+    - pathPrefix: "/var/log"
+      readOnly: true
+    - pathPrefix: "/usr/lib64"
+      readOnly: true
+  hostNetwork: true
+  hostIPC: false
+  hostPID: true
+  runAsUser:
+    rule: 'RunAsAny'
+  seLinux:
+    rule: 'RunAsAny'
+  supplementalGroups:
+    rule: 'RunAsAny'
+  fsGroup:
+    rule: 'RunAsAny'
